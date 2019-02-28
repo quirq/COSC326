@@ -2,6 +2,7 @@ package task7;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Task7{
 
@@ -10,18 +11,40 @@ public class Task7{
 	}
 
 	private void validate(ArrayList<String> emails){
-		for(int i = 0; i < emails.size(); i++){
+		for(String s : emails){
+			String curr = s;
 
+			curr = changeToLowercase(curr);
+
+
+
+			System.out.println(curr);
 		}
+	}
+
+	private String changeToLowercase(String emailToValidate){
+		return emailToValidate.toLowerCase();
+	}
+
+	private String replaceAtTextWithSymbol(String emailToValidate){
+
+	}
+
+	private String replaceDotTextWithSymbol(String emailToValidate){
+
+	}
+
+	private void validateMailbox(String emailToValidate){
+		
+		String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
+		Pattern pattern = Pattern.compile(regex);
 	}
 
 	private ArrayList readText(){
 		Scanner scanner = new Scanner(System.in);
 		ArrayList emails = new ArrayList<String>();
 
-		while(scanner.hasNext()){
-			emails.add(scanner.next());
-		}
+		emails.add(scanner.nextLine());
 
 		return emails;
 	}
