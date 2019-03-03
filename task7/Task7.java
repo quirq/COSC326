@@ -1,7 +1,5 @@
 package task7;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -137,17 +135,11 @@ public class Task7{
 	}
 
 	private ArrayList readText(){
-		Scanner scanner = null;
-		try {
-			scanner = new Scanner(new File("task7/input.txt"));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		Scanner scanner = new Scanner(System.in);
+
 		ArrayList emails = new ArrayList<String>();
 
-		while(scanner.hasNextLine()){
-			emails.add(scanner.nextLine());
-		}
+		emails.add(scanner.nextLine());
 
 		return emails;
 	}
