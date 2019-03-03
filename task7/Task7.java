@@ -2,6 +2,8 @@ package task7;
 
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -65,11 +67,28 @@ public class Task7{
 
 		StringBuilder replacedEmailDot = new StringBuilder(emailToReplaceDot);
 
-		if(emailToReplaceDot.contains("_dot_") && emailToReplaceDot.indexOf("_dot_") > emailToReplaceDot.indexOf("@")){
+		String domainOnly = emailToReplaceDot.substring(emailToReplaceDot.indexOf("@") + 1);
 
-			for(String validDomain : validDomainNames){
-				if(emailToReplaceDot.lastIndexOf(validDomain) == emailToReplaceDot.length() - validDomain.length()){
-					if(emailToReplaceDot.lastIndexOf("_dot_") + 5 == emailToReplaceDot.lastIndexOf(validDomain)){
+		char charAfterAt = emailToReplaceDot.charAt(emailToReplaceDot.indexOf("@") + 1);
+		if(charAfterAt == '['){
+			String ipAddress = domainOnly.substring(1, domainOnly.length() - 1);
+			String regex = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+					"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+					"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+					"([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+			Pattern pattern = Pattern.compile(regex);
+			Matcher matcher = pattern.matcher(ipAddress);
+
+			if(!matcher.matches()){
+				throw new RuntimeException("<- Invalid extension");
+			}
+			return replacedEmailDot.toString();
+		}
+		else if(emailToReplaceDot.contains("_dot_") && emailToReplaceDot.indexOf("_dot_") > emailToReplaceDot.indexOf("@")) {
+
+			for (String validDomain : validDomainNames) {
+				if (emailToReplaceDot.lastIndexOf(validDomain) == emailToReplaceDot.length() - validDomain.length()) {
+					if (emailToReplaceDot.lastIndexOf("_dot_") + 5 == emailToReplaceDot.lastIndexOf(validDomain)) {
 						int dotIndex = emailToReplaceDot.indexOf("_dot_");
 						replacedEmailDot.replace(dotIndex, dotIndex + 5, ".");
 						return replacedEmailDot.toString();
@@ -78,10 +97,22 @@ public class Task7{
 			}
 			throw new RuntimeException("<- Invalid extension");
 		}
+
+		String regex = "^[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
+		Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(domainOnly);
+
+		if(!matcher.matches()){
+			throw new RuntimeException("<- Invalid domain");
+		}
+
 		return replacedEmailDot.toString();
 	}
 
 	private void validateDomain(String emailToValidateDomain){
+		if(emailToValidateDomain.charAt(emailToValidateDomain.indexOf("@") + 1) == '['){
+			return;
+		}
 		for(String validDomain : validDomainNames){
 			if(emailToValidateDomain.lastIndexOf(validDomain) == emailToValidateDomain.length() - validDomain.length()){
 				return;
@@ -94,7 +125,8 @@ public class Task7{
 
 		String mailbox = emailToValidateMailbox.substring(0, emailToValidateMailbox.indexOf("@"));
 
-		String regex = "^[a-zA-Z0-9_.]-$";
+		//String regex = "^(?!-)(?!.*--)(?!_)(?!.*__)+(?<!-)+(?<!_)$";
+		String regex = "^(?!-)(?!.*--)(?!_)(?!.*__)[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*+(?<!-)+(?<!_)$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(mailbox);
 
@@ -105,10 +137,17 @@ public class Task7{
 	}
 
 	private ArrayList readText(){
-		Scanner scanner = new Scanner(System.in);
+		Scanner scanner = null;
+		try {
+			scanner = new Scanner(new File("task7/input.txt"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		ArrayList emails = new ArrayList<String>();
 
-		emails.add(scanner.nextLine());
+		while(scanner.hasNextLine()){
+			emails.add(scanner.nextLine());
+		}
 
 		return emails;
 	}
