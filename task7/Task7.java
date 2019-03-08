@@ -1,7 +1,5 @@
 package task7;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -69,17 +67,25 @@ public class Task7{
 
 		char charAfterAt = emailToReplaceDot.charAt(emailToReplaceDot.indexOf("@") + 1);
 		if(charAfterAt == '['){
-			String ipAddress = domainOnly.substring(1, domainOnly.length() - 1);
+
+			StringBuilder bracketIP = new StringBuilder(domainOnly);
+			while(bracketIP.toString().contains("_dot_")){
+				int dotIndex = bracketIP.toString().indexOf("_dot_");
+				bracketIP.replace(dotIndex, dotIndex + 5, ".");
+			}
+			String sansBracketIP = bracketIP.substring(1, bracketIP.length() - 1);
+
 			String regex = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
 					"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
 					"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
 					"([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
 			Pattern pattern = Pattern.compile(regex);
-			Matcher matcher = pattern.matcher(ipAddress);
+			Matcher matcher = pattern.matcher(sansBracketIP);
 
-			if(!matcher.matches()){
+			if(!matcher.matches() || bracketIP.indexOf("[") != 0 || bracketIP.lastIndexOf("]") != bracketIP.length() - 1){
 				throw new RuntimeException("<- Invalid extension");
 			}
+			replacedEmailDot.replace(replacedEmailDot.indexOf("@") + 1, replacedEmailDot.length(), bracketIP.toString());
 			return replacedEmailDot.toString();
 		}
 		else if(emailToReplaceDot.contains("_dot_") && emailToReplaceDot.indexOf("_dot_") > emailToReplaceDot.indexOf("@")) {
@@ -124,7 +130,7 @@ public class Task7{
 		String mailbox = emailToValidateMailbox.substring(0, emailToValidateMailbox.indexOf("@"));
 
 		//String regex = "^(?!-)(?!.*--)(?!_)(?!.*__)+(?<!-)+(?<!_)$";
-		String regex = "^(?!-)(?!.*--)(?!_)(?!.*__)[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*+(?<!-)+(?<!_)$";
+		String regex = "^(?!-)(?!.*--)(?!_)(?!.*__)(?!.*-\\.)(?!.*-_)(?!.*_\\.)(?!.*_-)(?!.*\\.-)(?!.*\\._)[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*+(?<!-)+(?<!_)$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(mailbox);
 
@@ -139,7 +145,9 @@ public class Task7{
 
 		ArrayList emails = new ArrayList<String>();
 
-		emails.add(scanner.nextLine());
+		while(scanner.hasNextLine()){
+			emails.add(scanner.nextLine());
+		}
 
 		return emails;
 	}
