@@ -25,3 +25,9 @@ dot.and_underscore@gmail.com
 hyphen-and_underscore@gmail.com
 --hype@gmail.com
 this.tests-everything_that_at_shouldwork_dot_com
+axe_.dotbro@gmail.com
+Axe-.bow@gmail.com
+jen@[192_dot_168_dot_178_dot_1]
+jen@[192_dot_168_dot_178_dot_1].com
+jen@[192_dot_168_dot_178_dot_1]@[192.178.143.22]
+jen@[192_dot_16a_dot_178_dot_11222]

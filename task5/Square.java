@@ -10,7 +10,7 @@ public class Square {
 
     public Square(double scale, int r, int g, int b, int drawLayer){
         this.scale = scale;
-        col = new Color(r, g, b);
+        this.col = new Color(r, g, b);
         this.drawLayer = drawLayer;
     }
 
