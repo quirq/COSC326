@@ -39,15 +39,13 @@ public class Task5 extends JPanel {
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.getContentPane().add(new Task5());
-        frame.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE + 25));
+        frame.setPreferredSize(new Dimension(WINDOW_SIZE + 25, WINDOW_SIZE + 50));
         frame.setLocationRelativeTo(null);
         frame.pack();
         frame.setVisible(true);
     }
 
-    public Task5(){
-        setOpaque(false);
-    }
+
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -55,7 +53,7 @@ public class Task5 extends JPanel {
             drawSquares(g, 0, WINDOW_SIZE/2, WINDOW_SIZE/2);
             drawLayer++;
         }
-
+        drawLayer = 0;
     }
 
     private void drawSquares(Graphics g, int i, int x, int y){
