@@ -4,10 +4,14 @@ import java.util.Scanner;
 
 public class Task6 {
     public static void main(String[] args) {
+
+        int base;
+        int size;
+
         Scanner scan = new Scanner(System.in);
 
         System.out.println("What base are you adding in?");
-        int base = Integer.parseInt(scan.nextLine());
+        base = Integer.parseInt(scan.nextLine());
         System.out.println("What is the first number to be added?");
         String first = scan.nextLine();
         System.out.println("What is the second number to be added?");
@@ -16,7 +20,7 @@ public class Task6 {
         String[] firstString = first.split("(?!^)");
         String[] secondString = second.split("(?!^)");
 
-        int size = firstString.length;
+        size = firstString.length;
         if(secondString.length > firstString.length) {
             size = secondString.length;
         }
