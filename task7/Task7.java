@@ -86,12 +86,12 @@ public class Task7{
 			replacedEmailDot.replace(replacedEmailDot.indexOf("@") + 1, replacedEmailDot.length(), bracketIP.toString());
 			return replacedEmailDot.toString();
 		}
-		else if(emailToReplaceDot.contains("_dot_") && emailToReplaceDot.indexOf("_dot_") > emailToReplaceDot.indexOf("@")) {
+		else if(emailToReplaceDot.contains("_dot_") && emailToReplaceDot.lastIndexOf("_dot_") > emailToReplaceDot.indexOf("@")) {
 
 			for (String validDomain : validDomainNames) {
 				if (emailToReplaceDot.lastIndexOf(validDomain) == emailToReplaceDot.length() - validDomain.length()) {
 					if (emailToReplaceDot.lastIndexOf("_dot_") + 5 == emailToReplaceDot.lastIndexOf(validDomain)) {
-						int dotIndex = emailToReplaceDot.indexOf("_dot_");
+						int dotIndex = emailToReplaceDot.lastIndexOf("_dot_");
 						replacedEmailDot.replace(dotIndex, dotIndex + 5, ".");
 						return replacedEmailDot.toString();
 					}
