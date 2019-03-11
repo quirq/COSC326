@@ -23,6 +23,8 @@ public class Task6 {
         size = firstString.length;
         if(secondString.length > firstString.length) {
             size = secondString.length;
+        } else if(secondString.length == firstString.length) {
+            size++;
         }
 
         int[] firstNumber = new int[size];
@@ -44,6 +46,8 @@ public class Task6 {
             secondNumber[i] = Integer.parseInt(secondString[iterator]);
             iterator++;
         }
+
+
 
     }
     
