@@ -1,9 +1,5 @@
-package task5;
-
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,16 +7,21 @@ public class Task5 extends JPanel {
 
     private static ArrayList<String> parameters;
     private static ArrayList<Square> squares = new ArrayList<>();
-    public static final String PARAMETER_FILE = "task5/parameters.txt";
     public static final int WINDOW_SIZE = 600;
     private static double totalScale = 0.0;
-    private static int drawLayer = 0;
-    private static double firstSize;
+    private static int currSquareDraw = 0;
 
-    public static void main(String[] args) {
+
+
+    public Task5(){
         parameters = new ArrayList<>();
         int squareLayer = 0;
-        readParameters();
+
+        Scanner scanner = new Scanner(System.in);
+        while(scanner.hasNextLine()){
+            parameters.add(scanner.nextLine());
+        }
+
         for(String s : parameters){
             String[] inputParameters = s.split(" ");
             double scale = Double.parseDouble(inputParameters[0]);
@@ -33,57 +34,71 @@ public class Task5 extends JPanel {
         }
 
         squares.add(null);
-        firstSize = WINDOW_SIZE * totalScale;
 
         JFrame frame = new JFrame("YGQA(A-M) Quilt");
-
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new Task5());
-        frame.setPreferredSize(new Dimension(WINDOW_SIZE + 25, WINDOW_SIZE + 50));
+        frame.getContentPane().add(this);
+        frame.setPreferredSize(new Dimension(WINDOW_SIZE + 15, WINDOW_SIZE + 30));
         frame.setLocationRelativeTo(null);
         frame.pack();
         frame.setVisible(true);
     }
 
+    private void drawSquaresByLayer(Graphics g, int i, int x, int y){
+        double doubleSquareSize = ((squares.get(i).getScale() / totalScale) * (WINDOW_SIZE));
+        int intSquareSize = (int) doubleSquareSize;
 
+        if(currSquareDraw == squares.get(i).getDrawLayer()){
+            g.setColor(squares.get(i).getColor());
+            g.fillRect(x - intSquareSize/2, y - intSquareSize/2, intSquareSize, intSquareSize);
+        }
+
+        if(squares.get(i + 1) != null){
+            drawSquaresByLayer(g, i+1, x - intSquareSize/2, y - intSquareSize/2);
+            drawSquaresByLayer(g, i+1, x - intSquareSize/2, y + intSquareSize/2);
+            drawSquaresByLayer(g, i+1, x + intSquareSize/2, y - intSquareSize/2);
+            drawSquaresByLayer(g, i+1, x + intSquareSize/2, y + intSquareSize/2);
+        }
+
+    }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        while(drawLayer < squares.size()){
-            drawSquares(g, 0, WINDOW_SIZE/2, WINDOW_SIZE/2);
-            drawLayer++;
+        while(currSquareDraw < squares.size()){
+            drawSquaresByLayer(g, 0, WINDOW_SIZE/2, WINDOW_SIZE/2);
+            currSquareDraw++;
         }
-        drawLayer = 0;
+        currSquareDraw = 0;
     }
 
-    private void drawSquares(Graphics g, int i, int x, int y){
-        double squareDimension = ((squares.get(i).getScale() / totalScale) * (WINDOW_SIZE));
-        int squareSize = (int) squareDimension;
-
-        if(drawLayer == squares.get(i).getDrawLayer()){
-            g.setColor(squares.get(i).getColor());
-            g.fillRect(x - squareSize/2, y - squareSize/2, squareSize, squareSize);
-        }
-        if(squares.get(i+1) != null){
-            drawSquares(g, i+1, x - squareSize/2, y - squareSize/2);
-            drawSquares(g, i+1, x + squareSize/2, y - squareSize/2);
-            drawSquares(g, i+1, x - squareSize/2, y + squareSize/2);
-            drawSquares(g, i+1, x + squareSize/2, y + squareSize/2);
-        }
-
+    public static void main(String[] args) {
+        new Task5();
     }
 
-    public static void readParameters(){
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(new File(PARAMETER_FILE));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+    private class Square {
+
+        private double scale;
+        private Color col;
+        private int squareDraw;
+
+        public Square(double scale, int r, int g, int b, int squareDraw){
+            this.scale = scale;
+            this.col = new Color(r, g, b);
+            this.squareDraw = squareDraw;
         }
 
-        while(scanner.hasNextLine()){
-            parameters.add(scanner.nextLine());
+        public double getScale(){
+            return scale;
         }
+
+        public Color getColor(){
+            return col;
+        }
+
+        public int getDrawLayer(){
+            return squareDraw;
+        }
+
     }
 
 }
