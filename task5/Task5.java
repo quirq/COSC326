@@ -1,3 +1,5 @@
+package task5;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ public class Task5 extends JPanel {
         JFrame frame = new JFrame("YGQA(A-M) Quilt");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.getContentPane().add(this);
-        frame.setPreferredSize(new Dimension(WINDOW_SIZE + 15, WINDOW_SIZE + 30));
+        frame.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE+22));
         frame.setLocationRelativeTo(null);
         frame.pack();
         frame.setVisible(true);
