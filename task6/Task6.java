@@ -68,7 +68,7 @@ public class Task6 {
         //if the number in sum is greater than the base, subtract the base and add one to the next number along
         for(int i = size - 1; i >= 0; i--) {
             if(sum[i] >= base) {
-                sum[i] -= (base);
+                sum[i] -= base;
                 sum[i-1]++;
             }
         }
@@ -78,7 +78,7 @@ public class Task6 {
 
         for(int i = 0; i < size; i++) {
             quotient[i] = divisor[i]/2;
-            if(sum[i]%2 == 1) {
+            if(divisor[i]%2 == 1) {
                 if(i != size -1) {
                     divisor[i + 1] += base;
                 } else {
