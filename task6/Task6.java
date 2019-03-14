@@ -4,18 +4,19 @@ import java.util.Scanner;
 
 public class Task6 {
     public static void main(String[] args) {
-        int base;
-        int size;
-        int iterator;
 
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("What base are you adding in?");
-        base = Integer.parseInt(scan.nextLine());
-        System.out.println("What is the first number to be added?");
+        int base = Integer.parseInt(scan.nextLine());
         String first = scan.nextLine();
-        System.out.println("What is the second number to be added?");
         String second = scan.nextLine();
+
+        addition(base, first, second);
+    }
+
+    private static void addition(int base, String first, String second) {
+        int size;
+        int iterator;
 
         String[] firstString = first.split("(?!^)");
         String[] secondString = second.split("(?!^)");
@@ -116,8 +117,5 @@ public class Task6 {
         } else {
             System.out.print(" with no remainder");
         }
-
     }
-    
-
 }
