@@ -88,7 +88,7 @@ public class Task6 {
             }
         }
 
-        System.out.print("\nThe sum of the two numbers in base " + base + " is ");
+        System.out.println("\nSum in base " + base + ":");
 
         //place removes placeholder 0s
         boolean place = false;
@@ -101,7 +101,7 @@ public class Task6 {
             }
         }
 
-        System.out.print("\nThe quotient of this sum when divided by two is ");
+        System.out.println("\nQuotient:");
         place = false;
         for(int i: quotient){
             if(i != 0) {
@@ -112,10 +112,6 @@ public class Task6 {
             }
         }
 
-        if(remainder == 1) {
-            System.out.print(" with a remainder of 1");
-        } else {
-            System.out.print(" with no remainder");
-        }
+        System.out.println("\nRemainder: " + remainder);
     }
 }
