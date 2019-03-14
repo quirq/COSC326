@@ -1,4 +1,4 @@
-package task7;
+//package task7;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -150,23 +150,23 @@ public class Task7{
 	}
 
 	private ArrayList readText(){
-//		Scanner scanner = new Scanner(System.in);
-//
-//		ArrayList emails = new ArrayList<String>();
-//
-//		while(scanner.hasNextLine()){
-//			emails.add(scanner.nextLine());
-//		}
+		Scanner scanner = new Scanner(System.in);
 
 		ArrayList emails = new ArrayList<String>();
-		try {
-			Scanner scanner = new Scanner(new File("task7/input.txt"));
-			while(scanner.hasNextLine()){
-				emails.add(scanner.nextLine());
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+
+		while(scanner.hasNextLine()){
+			emails.add(scanner.nextLine());
 		}
+
+//		ArrayList emails = new ArrayList<String>();
+//		try {
+//			Scanner scanner = new Scanner(new File("task7/input.txt"));
+//			while(scanner.hasNextLine()){
+//				emails.add(scanner.nextLine());
+//			}
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
 
 		return emails;
 	}
