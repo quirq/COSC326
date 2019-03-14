@@ -1,3 +1,4 @@
+andrew_dot_trotman_at_c_dot_com
 CEO@InsuroCorp.com
 maffu@cs.otago.ac.nz
 gerry_at_research.techies_dot_co.uk
@@ -5,6 +6,8 @@ bob.gmail.com
 cath@[139.80.91.50]
 bob@gmail.co.co
 zade@.me.com
+zade2.@me.com
+zade3@me.com.
 gucci-gang@gucci-gang.com
 dot.s@test1.com
 double..dots@test2.com
@@ -31,6 +34,8 @@ jen@[192_dot_168_dot_178_dot_1]
 jen@[192_dot_168_dot_178_dot_1].com
 jen@[192_dot_168_dot_178_dot_1]@[192.178.143.22]
 jen@[192_dot_16a_dot_178_dot_11222]
-andrew_dot_trotman_at_c_dot_com
+lau@[1234.123.11.2]
 a@a_dot_b_dot_c.cs.com
 shoot^box@gmail.com
+nice_dot_dot_domain_at_cs_dot_com
+this_dot__dot_is@broken.com
