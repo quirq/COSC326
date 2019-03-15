@@ -1,7 +1,5 @@
-//package task7;
+package task7;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -29,8 +27,7 @@ public class Task7{
 			try {
 				validatingEmail = changeToLowercase(validatingEmail);
 				validatingEmail = replaceAtTextWithSymbol(validatingEmail);
-				validatingEmail = replaceDomainDotTextWithSymbol(validatingEmail);
-				validatingEmail = replaceMailboxDotTextWithSymbol(validatingEmail);
+				validatingEmail = replaceDotTextWithSymbol(validatingEmail);
 				validateDomain(validatingEmail);
 				validateMailboxName(validatingEmail);
 
@@ -61,11 +58,11 @@ public class Task7{
 		return replacedEmailAt.toString();
 	}
 
-	private String replaceDomainDotTextWithSymbol(String emailToReplaceDot){
+	private String replaceDotTextWithSymbol(String emailToReplaceDot){
 
 
 		StringBuilder replacedEmailDot = new StringBuilder(emailToReplaceDot);
-		String mailbox = emailToReplaceDot.substring(0, emailToReplaceDot.indexOf("@"));
+
 		String domainOnly = emailToReplaceDot.substring(emailToReplaceDot.indexOf("@") + 1);
 
 		char charAfterAt = emailToReplaceDot.charAt(emailToReplaceDot.indexOf("@") + 1);
@@ -91,35 +88,32 @@ public class Task7{
 			replacedEmailDot.replace(replacedEmailDot.indexOf("@") + 1, replacedEmailDot.length(), bracketIP.toString());
 			return replacedEmailDot.toString();
 		}
-		else if(emailToReplaceDot.contains("_dot_")) {
+		else if(domainOnly.contains("_dot_")) {
 
-			domainOnly = domainOnly.replaceAll("_dot_", ".");
+			for (String validDomain : validDomainNames) {
+				if (emailToReplaceDot.lastIndexOf(validDomain) == emailToReplaceDot.length() - validDomain.length()) {
+					if (emailToReplaceDot.lastIndexOf("_dot_") + 5 == emailToReplaceDot.lastIndexOf(validDomain)) {
+						while(domainOnly.contains("_dot_")){
+							int dotIndex = emailToReplaceDot.lastIndexOf("_dot_");
+							replacedEmailDot.replace(dotIndex, dotIndex + 5, ".");
+							return replacedEmailDot.toString();
+						}
 
+					}
+				}
+			}
+			throw new RuntimeException("<- Invalid extension");
 		}
 
-		Pattern domainPattern = Pattern.compile("^[A-Za-z0-9]+(\\.[_A-Za-z0-9-]+)*$");
-		Matcher matcher = domainPattern.matcher(domainOnly);
+		String regex = "^[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
+		Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(domainOnly);
+
 		if(!matcher.matches()){
 			throw new RuntimeException("<- Invalid domain");
 		}
 
-//		String regex = "^[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
-//		Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-//		Matcher matcher = pattern.matcher(domainOnly);
-//
-//		if(!matcher.matches()){
-//			throw new RuntimeException("<- Invalid domain");
-//		}
-
-		return mailbox + "@" + domainOnly;
-	}
-
-	private String replaceMailboxDotTextWithSymbol(String emailToReplaceMailboxDot){
-
-		String mailboxOnly = emailToReplaceMailboxDot.substring(0, emailToReplaceMailboxDot.indexOf("@"));
-
-		mailboxOnly = emailToReplaceMailboxDot.replaceAll("_dot_", ".");
-		return mailboxOnly;
+		return replacedEmailDot.toString();
 	}
 
 	private void validateDomain(String emailToValidateDomain){
@@ -157,16 +151,6 @@ public class Task7{
 		while(scanner.hasNextLine()){
 			emails.add(scanner.nextLine());
 		}
-
-//		ArrayList emails = new ArrayList<String>();
-//		try {
-//			Scanner scanner = new Scanner(new File("task7/input.txt"));
-//			while(scanner.hasNextLine()){
-//				emails.add(scanner.nextLine());
-//			}
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
 
 		return emails;
 	}
