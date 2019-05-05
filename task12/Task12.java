@@ -29,7 +29,7 @@ public class Task12 {
 			ratio = 1.0;
 		}
 
-		maxScale = Math.pow(2, n);
+		maxScale = Math.pow(2, n) - 0.7;
 
 		StdDraw.setPenRadius(0.01);
 		StdDraw.setPenColor(Color.BLACK);
@@ -89,9 +89,9 @@ public class Task12 {
 
 		public HilbertCurve(int n){
 			angle = 0;
-			x = 0.5;
+			x = 0.1;
 			//Scales starting position of y to ensure curve is in centre of window
-			y = Math.pow(2, n) - 0.5;
+			y = Math.pow(2, n) - 0.8;
 		}
 
 		public void turn(int degrees){
