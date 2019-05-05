@@ -39,3 +39,6 @@ a@a_dot_b_dot_c.cs.com
 shoot^box@gmail.com
 nice_dot_dot_domain_at_cs_dot_com
 this_dot__dot_is@broken.com
+a@a_dot_dot_b.cs.com
+a_dot_me_at_hi_dot_bro_dot_com
+a_dot_dot_nice_at_good_dot_stuff.com

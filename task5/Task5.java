@@ -7,11 +7,11 @@ import java.util.Scanner;
 
 public class Task5 extends JPanel {
 
-    private static ArrayList<String> parameters;
-    private static ArrayList<Square> squares = new ArrayList<>();
-    public static final int WINDOW_SIZE = 600;
-    private static double totalScale = 0.0;
-    private static int currSquareDraw = 0;
+    private  ArrayList<String> parameters;
+    private  ArrayList<Square> squares = new ArrayList<>();
+    public  final int WINDOW_SIZE = 600;
+    private  double totalScale = 0.0;
+    private  int currSquareDraw = 0;
 
 
 
@@ -73,7 +73,7 @@ public class Task5 extends JPanel {
         currSquareDraw = 0;
     }
 
-    public static void main(String[] args) {
+    public  void main(String[] args) {
         new Task5();
     }
 

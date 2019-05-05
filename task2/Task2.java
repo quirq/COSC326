@@ -1,4 +1,4 @@
-package task2;
+//package task2;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -8,7 +8,7 @@ public class Task2 {
     ArrayList<String> dateLines;
     ArrayList<String> months = new ArrayList<>();
 
-    public static void main(String[] args) {
+    public  void main(String[] args) {
         new Task2();
     }
 
