@@ -551,7 +551,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	private static boolean defer = false;
 
 	// boundary of drawing canvas, 0% border
-	// private static final double BORDER = 0.05;
+//	 private static final double BORDER = 0.05;
 	private static final double BORDER = 0.00;
 	private static final double DEFAULT_XMIN = 0.0;
 	private static final double DEFAULT_XMAX = 1.0;
@@ -597,6 +597,10 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	// static initializer
 	static {
 		init();
+	}
+
+	public static void closeWindow(){
+		frame.dispose();
 	}
 
 	/**
@@ -1396,6 +1400,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         throw new IllegalArgumentException("image " + filename + " not found");
     }
 */
+
 	/**
 	 * Draws the specified image centered at (<em>x</em>, <em>y</em>).
 	 * The supported image formats are JPEG, PNG, and GIF.
