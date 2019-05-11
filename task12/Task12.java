@@ -21,29 +21,32 @@ public class Task12 {
 
 		//Take in parameter n, and optional parameter r
 		Scanner scanner = new Scanner(System.in);
-		String[] input = scanner.nextLine().split(" ");
-		n = Integer.parseInt(input[0]);
-		if(input.length == 2){
-			ratio = Double.parseDouble(input[1]);
-		} else {
-			ratio = 1.0;
+		while(scanner.hasNextLine()){
+			String[] input = scanner.nextLine().split(" ");
+			n = Integer.parseInt(input[0]);
+			if(input.length == 2){
+				ratio = Double.parseDouble(input[1]);
+			} else {
+				ratio = 1.0;
+			}
+
+			maxScale = Math.pow(2, n) - 0.7;
+
+			StdDraw.setPenRadius(0.01);
+			StdDraw.setPenColor(Color.BLACK);
+			StdDraw.setXscale(0, maxScale);
+			StdDraw.setYscale(0, maxScale);
+		    StdDraw.enableDoubleBuffering();
+			curve = new HilbertCurve(n);
+
+			hilbertRecursive(n, ratio);
+
+			StdDraw.show();
+			StdDraw.save("hilbertCurve.png");
+			StdDraw.closeWindow();
+			panel = new DrawingPanel();
 		}
 
-		maxScale = Math.pow(2, n) - 0.7;
-
-		StdDraw.setPenRadius(0.01);
-		StdDraw.setPenColor(Color.BLACK);
-		StdDraw.setXscale(0, maxScale);
-		StdDraw.setYscale(0, maxScale);
-		StdDraw.enableDoubleBuffering();
-		curve = new HilbertCurve(n);
-
-		hilbertRecursive(n, ratio);
-
-		StdDraw.show();
-		StdDraw.save("hilbertCurve.png");
-		StdDraw.closeWindow();
-		panel = new DrawingPanel();
 	}
 
 	public void hilbertRecursive(int n, double ratio){
@@ -108,6 +111,7 @@ public class Task12 {
 
 	}
 
+	//Class to redraw hilbert curve with scaling
 	private class DrawingPanel extends JPanel implements ComponentListener {
 
 		JFrame frame;
@@ -120,6 +124,7 @@ public class Task12 {
 				e.printStackTrace();
 			}
 
+			//Setup frame and JPanel
 			this.addComponentListener(this);
 			frame = new JFrame();
 			frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -133,10 +138,12 @@ public class Task12 {
 
 		}
 
+		//Redraw image when resizing the JFrame
 		public void paint(Graphics g){
 			g.drawImage(hilbertCurve, 0,0, frame.getWidth() - 15, frame.getHeight() - 40, null);
 		}
 
+		//Repaint image when JFrame resized
 		@Override
 		public void componentResized(ComponentEvent e) {
 			repaint();
