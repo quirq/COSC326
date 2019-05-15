@@ -11,6 +11,7 @@ public class Task10 {
 	char operation;
 	boolean LEFT = false, RIGHT = true;
 	Node finalNode = null;
+	NormalNode finalNormalNode = null;
 
 	public Task10(){
 
@@ -49,7 +50,8 @@ public class Task10 {
 		int minPossibleNumber = 0;
 
 		for(int i = 0; i < numbers.size(); i++){
-			minPossibleNumber += numbers.get(i);
+			if(numbers.get(i) != 1)
+				minPossibleNumber += numbers.get(i);
 		}
 
 		if(minPossibleNumber > finalNumber){
@@ -101,9 +103,71 @@ public class Task10 {
 		return result.toString();
 	}
 
-	private String normalSearch(ArrayList<Integer> nums){
+	private String normalSearch(ArrayList<Integer> numbers){
 
-		return "Nah not implemented yet boi";
+		NormalNode root = new NormalNode(numbers.get(0));
+		finalNormalNode = null;
+		String[] symbols = new String[numbers.size() - 1];
+
+		StringBuilder sb = new StringBuilder();
+
+		populateNormalTree(numbers, 1, root);
+		if(finalNormalNode != null){
+			for(int i = symbols.length - 1; i >= 0; i--){
+				if(finalNormalNode.leftChild){
+					symbols[i] = "+";
+				} else {
+					symbols[i] = "*";
+				}
+				finalNormalNode = finalNormalNode.parent;
+			}
+			if(finalNormalNode.equals(root)){
+				for(int i = 0; i < symbols.length; i++){
+					sb.append(numbers.get(i) + " " + symbols[i] + " ");
+				}
+				sb.append(numbers.get(numbers.size() - 1));
+				return sb.toString();
+			}
+		} else {
+			return "Impossible";
+		}
+		return "Impossible";
+	}
+
+	public void populateNormalTree(ArrayList<Integer> numbers, int i, NormalNode normalNode){
+		int currSum = normalNode.leftVal + normalNode.rightVal;
+		if(finalNormalNode != null){
+			return;
+		}
+
+		if(i >= numbers.size()){
+			if(currSum == finalGoal && normalNode.level == numbers.size() - 1){
+				finalNormalNode = normalNode;
+			}
+			return;
+		}
+
+		if(currSum - normalNode.rightVal != normalNode.leftVal ||
+				currSum - normalNode.leftVal != normalNode.rightVal ||
+				normalNode.rightVal * numbers.get(i) / numbers.get(i) != normalNode.rightVal ||
+				normalNode.rightVal < 0 || normalNode.leftVal < 0){
+			return;
+		}
+
+		if(currSum > finalGoal){
+			return;
+		}
+
+		if(currSum + numbers.get(i) <= finalGoal){
+			normalNode.left = new NormalNode(numbers.get(i), i, true, normalNode);
+			populateNormalTree(numbers, i+1, normalNode.left);
+		}
+
+		if(normalNode.rightVal * numbers.get(i) + normalNode.leftVal <= finalGoal){
+			normalNode.right = new NormalNode(numbers.get(i), i, false, normalNode);
+			populateNormalTree(numbers, i+1, normalNode.right);
+		}
+
 	}
 
 	public void populateTree(Node currNode, int currDepth, ArrayList<Integer> nums){
@@ -153,6 +217,37 @@ public class Task10 {
 			this.value = value;
 			this.childOf = child;
 			this.parent = parent;
+		}
+	}
+
+	private class NormalNode{
+		public int leftVal, rightVal;
+		public int level;
+		public boolean leftChild;
+		NormalNode left, right, parent;
+
+		NormalNode(int val, int level, boolean lChild, NormalNode parent){
+			this.parent = parent;
+			this.leftChild = lChild;
+
+			//Left child, so we do addition
+			if(lChild){
+				this.level = level;
+				this.leftVal = parent.leftVal + parent.rightVal;
+				this.rightVal = val;
+			}
+			//Else right child, so we do multiplication
+			else {
+				this.leftVal = parent.leftVal;
+				this.rightVal = parent.rightVal * val;
+				this.level = level;
+			}
+		}
+
+		NormalNode(int val){
+			this.leftVal = 0;
+			this.rightVal = val;
+			this.parent = null;
 		}
 	}
 
