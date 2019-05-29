@@ -13,6 +13,10 @@ public class Task12 {
 
 	private HilbertCurve curve;
 	private DrawingPanel panel;
+	private double globalRatio;
+	private static final int LEFT = 90, RIGHT = -90;
+
+	private enum DIRECTION {UP, RIGHT, DOWN, LEFT}
 
 	public Task12(){
 		int n = 0;
@@ -51,33 +55,34 @@ public class Task12 {
 
 	public void hilbertRecursive(int n, double ratio){
 		if (n == 0) return;
-		curve.turn(-90);
-		drawRecursive(n-1, ratio);
-		curve.forward(1.0);
-		curve.turn(90);
+		globalRatio = Math.pow(2, n-1);
+		curve.turn(RIGHT);
+		hilbertRecursive2(n-1, ratio);
+		curve.forward(globalRatio);
+		curve.turn(LEFT);
 		hilbertRecursive(n-1, ratio);
-		curve.forward(1.0);
+		curve.forward(globalRatio);
 		hilbertRecursive(n-1, ratio);
-		curve.turn(90);
-		curve.forward(1.0);
-		drawRecursive(n-1, ratio);
-		curve.turn(-90);
+		curve.turn(LEFT);
+		curve.forward(globalRatio);
+		hilbertRecursive2(n-1, ratio);
+		curve.turn(RIGHT);
 	}
 
-	public void drawRecursive(int n, double ratio){
-		ratio *= ratio;
+	public void hilbertRecursive2(int n, double ratio){
 		if (n == 0) return;
-		curve.turn(90);
+		globalRatio = Math.pow(2, n-1);
+		curve.turn(LEFT);
 		hilbertRecursive(n-1, ratio);
-		curve.forward(ratio);
-		curve.turn(-90);
-		drawRecursive(n-1, ratio);
-		curve.forward(ratio);
-		drawRecursive(n-1, ratio);
-		curve.turn(-90);
-		curve.forward(ratio);
+		curve.forward(globalRatio);
+		curve.turn(RIGHT);
+		hilbertRecursive2(n-1, ratio);
+		curve.forward(globalRatio);
+		hilbertRecursive2(n-1, ratio);
+		curve.turn(RIGHT);
+		curve.forward(globalRatio);
 		hilbertRecursive(n-1, ratio);
-		curve.turn(90);
+		curve.turn(LEFT);
 	}
 
 	public static void main(String[] args) {
